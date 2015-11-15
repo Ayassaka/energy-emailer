@@ -92,9 +92,11 @@
             // 
             // textboxEmailAddress
             // 
+            this.textboxEmailAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxEmailAddress.Location = new System.Drawing.Point(325, 33);
             this.textboxEmailAddress.Name = "textboxEmailAddress";
-            this.textboxEmailAddress.Size = new System.Drawing.Size(158, 20);
+            this.textboxEmailAddress.Size = new System.Drawing.Size(160, 20);
             this.textboxEmailAddress.TabIndex = 1;
             // 
             // labelEmailAddress
@@ -108,10 +110,12 @@
             // 
             // textboxPassword
             // 
+            this.textboxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxPassword.Location = new System.Drawing.Point(325, 106);
             this.textboxPassword.Name = "textboxPassword";
             this.textboxPassword.PasswordChar = '*';
-            this.textboxPassword.Size = new System.Drawing.Size(158, 20);
+            this.textboxPassword.Size = new System.Drawing.Size(160, 20);
             this.textboxPassword.TabIndex = 4;
             // 
             // labelPassword
@@ -125,9 +129,11 @@
             // 
             // textboxSmtpHostname
             // 
+            this.textboxSmtpHostname.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxSmtpHostname.Location = new System.Drawing.Point(325, 132);
             this.textboxSmtpHostname.Name = "textboxSmtpHostname";
-            this.textboxSmtpHostname.Size = new System.Drawing.Size(158, 20);
+            this.textboxSmtpHostname.Size = new System.Drawing.Size(160, 20);
             this.textboxSmtpHostname.TabIndex = 5;
             // 
             // labelSmtpHost
@@ -158,6 +164,7 @@
             // 
             // labelEnableSSL
             // 
+            this.labelEnableSSL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelEnableSSL.AutoSize = true;
             this.labelEnableSSL.Location = new System.Drawing.Point(396, 161);
             this.labelEnableSSL.Name = "labelEnableSSL";
@@ -167,6 +174,7 @@
             // 
             // checkboxEnableSSL
             // 
+            this.checkboxEnableSSL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkboxEnableSSL.AutoSize = true;
             this.checkboxEnableSSL.Checked = true;
             this.checkboxEnableSSL.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -206,6 +214,7 @@
             // 
             // buttonTestAccount
             // 
+            this.buttonTestAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonTestAccount.Location = new System.Drawing.Point(379, 185);
             this.buttonTestAccount.Name = "buttonTestAccount";
             this.buttonTestAccount.Size = new System.Drawing.Size(104, 22);
@@ -216,6 +225,7 @@
             // 
             // comboBoxWorksheetSelector
             // 
+            this.comboBoxWorksheetSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxWorksheetSelector.FormattingEnabled = true;
             this.comboBoxWorksheetSelector.Location = new System.Drawing.Point(108, 249);
             this.comboBoxWorksheetSelector.Name = "comboBoxWorksheetSelector";
@@ -230,7 +240,7 @@
             this.fileToolStripMenuItem});
             this.menuStripTop.Location = new System.Drawing.Point(0, 0);
             this.menuStripTop.Name = "menuStripTop";
-            this.menuStripTop.Size = new System.Drawing.Size(493, 24);
+            this.menuStripTop.Size = new System.Drawing.Size(495, 24);
             this.menuStripTop.TabIndex = 20;
             this.menuStripTop.Text = "menuStripTop";
             // 
@@ -259,6 +269,8 @@
             // 
             // progressBarSending
             // 
+            this.progressBarSending.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBarSending.Location = new System.Drawing.Point(10, 346);
             this.progressBarSending.Name = "progressBarSending";
             this.progressBarSending.Size = new System.Drawing.Size(471, 21);
@@ -266,6 +278,7 @@
             // 
             // labelExcelWorksheet
             // 
+            this.labelExcelWorksheet.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelExcelWorksheet.AutoSize = true;
             this.labelExcelWorksheet.Location = new System.Drawing.Point(9, 252);
             this.labelExcelWorksheet.Name = "labelExcelWorksheet";
@@ -275,6 +288,7 @@
             // 
             // labelTotalEntriesLabel
             // 
+            this.labelTotalEntriesLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelTotalEntriesLabel.AutoSize = true;
             this.labelTotalEntriesLabel.Location = new System.Drawing.Point(9, 274);
             this.labelTotalEntriesLabel.Name = "labelTotalEntriesLabel";
@@ -284,6 +298,7 @@
             // 
             // labelExcelWorkbookLabel
             // 
+            this.labelExcelWorkbookLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelExcelWorkbookLabel.AutoSize = true;
             this.labelExcelWorkbookLabel.Location = new System.Drawing.Point(9, 229);
             this.labelExcelWorkbookLabel.Name = "labelExcelWorkbookLabel";
@@ -293,6 +308,7 @@
             // 
             // labelExcelWorkbookName
             // 
+            this.labelExcelWorkbookName.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelExcelWorkbookName.AutoSize = true;
             this.labelExcelWorkbookName.Cursor = System.Windows.Forms.Cursors.Hand;
             this.labelExcelWorkbookName.Location = new System.Drawing.Point(105, 229);
@@ -304,6 +320,7 @@
             // 
             // labelTotalEntriesValue
             // 
+            this.labelTotalEntriesValue.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelTotalEntriesValue.AutoSize = true;
             this.labelTotalEntriesValue.Location = new System.Drawing.Point(105, 274);
             this.labelTotalEntriesValue.Name = "labelTotalEntriesValue";
@@ -313,6 +330,7 @@
             // 
             // buttonSend
             // 
+            this.buttonSend.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonSend.Location = new System.Drawing.Point(167, 298);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(173, 32);
@@ -323,6 +341,7 @@
             // 
             // buttonLoadWorksheet
             // 
+            this.buttonLoadWorksheet.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.buttonLoadWorksheet.Location = new System.Drawing.Point(269, 247);
             this.buttonLoadWorksheet.Name = "buttonLoadWorksheet";
             this.buttonLoadWorksheet.Size = new System.Drawing.Size(104, 22);
@@ -333,6 +352,7 @@
             // 
             // buttonCloseWorksheet
             // 
+            this.buttonCloseWorksheet.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.buttonCloseWorksheet.Location = new System.Drawing.Point(379, 247);
             this.buttonCloseWorksheet.Name = "buttonCloseWorksheet";
             this.buttonCloseWorksheet.Size = new System.Drawing.Size(104, 22);
@@ -352,16 +372,20 @@
             // 
             // textBoxUsername
             // 
+            this.textBoxUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxUsername.Location = new System.Drawing.Point(325, 57);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(158, 20);
+            this.textBoxUsername.Size = new System.Drawing.Size(160, 20);
             this.textBoxUsername.TabIndex = 2;
             // 
             // textBoxDisplayName
             // 
+            this.textBoxDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDisplayName.Location = new System.Drawing.Point(325, 82);
             this.textBoxDisplayName.Name = "textBoxDisplayName";
-            this.textBoxDisplayName.Size = new System.Drawing.Size(158, 20);
+            this.textBoxDisplayName.Size = new System.Drawing.Size(160, 20);
             this.textBoxDisplayName.TabIndex = 3;
             // 
             // labelAlias
@@ -385,7 +409,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(493, 381);
+            this.ClientSize = new System.Drawing.Size(495, 381);
             this.Controls.Add(this.labelAlias);
             this.Controls.Add(this.textBoxDisplayName);
             this.Controls.Add(this.textBoxUsername);
