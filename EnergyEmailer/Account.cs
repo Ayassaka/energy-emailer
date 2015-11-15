@@ -8,67 +8,67 @@ namespace EnergyEmailer
     [Serializable()]
     public class Account
     {
-        private string emailAddress;
         public string EmailAddress
         {
-            get { return emailAddress; }
+            get;
+            private set;
         }
-
-        private string password;
+        
         public string Password
         {
-            get { return password; }
+            get;
+            private set;
         }
-
-        private string smtpHostname;
+        
         public string SmtpHostname
         {
-            get { return smtpHostname; }
+            get;
+            private set;
         }
-
-        private int portNumber;
+        
         public int PortNumber
         {
-            get { return portNumber; }
+            get;
+            private set;
         }
-
-        private bool sslIsEnabled;
+        
         public bool SslIsEnabled
         {
-            get { return sslIsEnabled; }
+            get;
+            private set;
         }
-
-        private string loginId;
+        
         public string LoginId
         {
-            get { return loginId; }
+            get;
+            private set;
         }
-
-        private string displayName;
+        
         public string DisplayName
         {
-            get { return displayName; }
+            get;
+            private set;
         }
 
         public Account(Account toCopy)
         {
-            emailAddress = toCopy.emailAddress;
-            loginId = toCopy.loginId;
-            displayName = toCopy.displayName;
-            smtpHostname = toCopy.smtpHostname;
-            portNumber = toCopy.portNumber;
-            sslIsEnabled = toCopy.sslIsEnabled;
+            EmailAddress = toCopy.EmailAddress;
+            LoginId = toCopy.LoginId;
+            DisplayName = toCopy.DisplayName;
+            SmtpHostname = toCopy.SmtpHostname;
+            PortNumber = toCopy.PortNumber;
+            SslIsEnabled = toCopy.SslIsEnabled;
         }
 
         public Account(string p_emailAddress, string p_username, string p_displayName, string p_password, string p_smtpHostname, int p_portNumber, bool p_sslIsEnabled)
         {
-            emailAddress = p_emailAddress;
-            displayName = p_displayName;
-            password = p_password;
-            smtpHostname = p_smtpHostname;
-            portNumber = p_portNumber;
-            sslIsEnabled = p_sslIsEnabled;
-            loginId = p_username;
+            EmailAddress = p_emailAddress;
+            DisplayName = p_displayName;
+            Password = p_password;
+            SmtpHostname = p_smtpHostname;
+            PortNumber = p_portNumber;
+            SslIsEnabled = p_sslIsEnabled;
+            LoginId = p_username;
         }
     }
 }
