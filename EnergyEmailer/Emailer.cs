@@ -10,18 +10,18 @@ namespace EnergyEmailer
 {
     public static class Emailer
     {
-        private const string MESSAGE_CONTROL = @"html\ReportCard_Control.html";
-        private const string MESSAGE_GENERIC = @"html\ReportCard_Generic.html";
-        private const string MESSAGE_PERSONALIZED = @"html\ReportCard_Personalized.html";
+        private const string MESSAGE_CONTROL = @"html/ReportCard_Control.html";
+        private const string MESSAGE_GENERIC = @"html/ReportCard_Generic.html";
+        private const string MESSAGE_PERSONALIZED = @"html/ReportCard_Personalized.html";
 
 
         public const int MESSAGE_TYPE_CONTROL = 0;
         public const int MESSAGE_TYPE_GENERIC = 1;
         public const int MESSAGE_TYPE_PERSONALIZED = 2;
 
-        private static EmailBody emailBodyControl = new EmailBody(MESSAGE_CONTROL);
-        private static EmailBody emailBodyGeneric = new EmailBody(MESSAGE_GENERIC);
-        private static EmailBody emailBodyPersonalized = new EmailBody(MESSAGE_PERSONALIZED);
+        private static EmailBody s_emailBodyControl = new EmailBody(MESSAGE_CONTROL);
+        private static EmailBody s_emailBodyGeneric = new EmailBody(MESSAGE_GENERIC);
+        private static EmailBody s_emailBodyPersonalized = new EmailBody(MESSAGE_PERSONALIZED);
 
         public static void Ping() { }
 
@@ -46,13 +46,13 @@ namespace EnergyEmailer
                 switch (entry.MessageType)
                 {
                     case MESSAGE_TYPE_CONTROL:
-                        mailMsg.Body = emailBodyControl.Generate(entry.RoomNumber, entry.YourEnergyUse, entry.OtherEnergyUse, entry.BestEnergyUse, entry.Rating);
+                        mailMsg.Body = s_emailBodyControl.Generate(entry.RoomNumber, entry.YourEnergyUse, entry.OtherEnergyUse, entry.BestEnergyUse, entry.Rating);
                         break;
                     case MESSAGE_TYPE_GENERIC:
-                        mailMsg.Body = emailBodyGeneric.Generate(entry.RoomNumber, entry.YourEnergyUse, entry.OtherEnergyUse, entry.BestEnergyUse, entry.Rating);
+                        mailMsg.Body = s_emailBodyGeneric.Generate(entry.RoomNumber, entry.YourEnergyUse, entry.OtherEnergyUse, entry.BestEnergyUse, entry.Rating);
                         break;
                     case MESSAGE_TYPE_PERSONALIZED:
-                        mailMsg.Body = emailBodyPersonalized.Generate(entry.RoomNumber, entry.YourEnergyUse, entry.OtherEnergyUse, entry.BestEnergyUse, entry.Rating);
+                        mailMsg.Body = s_emailBodyPersonalized.Generate(entry.RoomNumber, entry.YourEnergyUse, entry.OtherEnergyUse, entry.BestEnergyUse, entry.Rating);
                         break;
                 }
 
@@ -100,8 +100,8 @@ namespace EnergyEmailer
             imagePoor
         }
 
-        private List<string> _paragraphText = new List<string>();
-        private List<InsertionKey> _insertionKeys = new List<InsertionKey>();
+        private List<string> m_paragraphText = new List<string>();
+        private List<InsertionKey> m_insertionKeys = new List<InsertionKey>();
 
         public EmailBody(string filename)
         {
@@ -118,16 +118,22 @@ namespace EnergyEmailer
                     while (!(readLine = sr.ReadLine()).ToLower().Contains("<body"))
                     {
                         if (sr.EndOfStream)
+                        {
                             throw new InvalidDataException("No opening <body> tag found in HTML file.");
+                        }
                     }
 
                     while (!(readLine = sr.ReadLine()).ToLower().Contains("</body"))
                     {
                         if (sr.EndOfStream)
+                        {
                             throw new InvalidDataException("No closing </body> tag found in HTML file.");
+                        }
 
                         if (readLine != null)
+                        {
                             allLines.Add(readLine);
+                        }
                     }
                 }
 
@@ -140,58 +146,58 @@ namespace EnergyEmailer
                         switch (words[i])
                         {
                             case "YOU":
-                                _insertionKeys.Add(InsertionKey.EnergyUsedMe);
+                                m_insertionKeys.Add(InsertionKey.EnergyUsedMe);
                                 break;
                             case "NUM":
-                                _insertionKeys.Add(InsertionKey.RoomNumber);
+                                m_insertionKeys.Add(InsertionKey.RoomNumber);
                                 break;
                             case "OTH":
-                                _insertionKeys.Add(InsertionKey.EnergyUsedOther);
+                                m_insertionKeys.Add(InsertionKey.EnergyUsedOther);
                                 break;
                             case "EFF":
-                                _insertionKeys.Add(InsertionKey.EnergyUsedBest);
+                                m_insertionKeys.Add(InsertionKey.EnergyUsedBest);
                                 break;
                             case "cEX":
-                                _insertionKeys.Add(InsertionKey.ColorExcellent);
+                                m_insertionKeys.Add(InsertionKey.ColorExcellent);
                                 break;
                             case "cGD":
-                                _insertionKeys.Add(InsertionKey.ColorGood);
+                                m_insertionKeys.Add(InsertionKey.ColorGood);
                                 break;
                             case "cPR":
-                                _insertionKeys.Add(InsertionKey.ColorPoor);
+                                m_insertionKeys.Add(InsertionKey.ColorPoor);
                                 break;
                             case "hYOU_T":
-                                _insertionKeys.Add(InsertionKey.BarGraphHeightMeTop);
+                                m_insertionKeys.Add(InsertionKey.BarGraphHeightMeTop);
                                 break;
                             case "hYOU_B":
-                                _insertionKeys.Add(InsertionKey.BarGraphHeightMeBottom);
+                                m_insertionKeys.Add(InsertionKey.BarGraphHeightMeBottom);
                                 break;
                             case "hOTH_T":
-                                _insertionKeys.Add(InsertionKey.BarGraphHeightOtherTop);
+                                m_insertionKeys.Add(InsertionKey.BarGraphHeightOtherTop);
                                 break;
                             case "hOTH_B":
-                                _insertionKeys.Add(InsertionKey.BarGraphHeightOtherBottom);
+                                m_insertionKeys.Add(InsertionKey.BarGraphHeightOtherBottom);
                                 break;
                             case "hEFF_T":
-                                _insertionKeys.Add(InsertionKey.BarGraphHeightBestTop);
+                                m_insertionKeys.Add(InsertionKey.BarGraphHeightBestTop);
                                 break;
                             case "hEFF_B":
-                                _insertionKeys.Add(InsertionKey.BarGraphHeightBestBottom);
+                                m_insertionKeys.Add(InsertionKey.BarGraphHeightBestBottom);
                                 break;
                             case "iEX":
-                                _insertionKeys.Add(InsertionKey.imageExcellent);
+                                m_insertionKeys.Add(InsertionKey.imageExcellent);
                                 break;
                             case "iGD":
-                                _insertionKeys.Add(InsertionKey.imageGood);
+                                m_insertionKeys.Add(InsertionKey.imageGood);
                                 break;
                             case "iPR":
-                                _insertionKeys.Add(InsertionKey.imagePoor);
+                                m_insertionKeys.Add(InsertionKey.imagePoor);
                                 break;
                             default:
-                                if (_paragraphText.Count > _insertionKeys.Count)
-                                    _paragraphText[_paragraphText.Count - 1] = _paragraphText[_paragraphText.Count - 1] + words[i];
+                                if (m_paragraphText.Count > m_insertionKeys.Count)
+                                    m_paragraphText[m_paragraphText.Count - 1] = m_paragraphText[m_paragraphText.Count - 1] + words[i];
                                 else
-                                    _paragraphText.Add(words[i]);
+                                    m_paragraphText.Add(words[i]);
                                 break;
                         }
                     }
@@ -209,12 +215,12 @@ namespace EnergyEmailer
         {
             string toReturn = "";
 
-            for (int i = 0; i < _paragraphText.Count; ++i)
+            for (int i = 0; i < m_paragraphText.Count; ++i)
             {
-                toReturn += _paragraphText[i];
-                if (_insertionKeys.Count > i)
+                toReturn += m_paragraphText[i];
+                if (m_insertionKeys.Count > i)
                 {
-                    switch (_insertionKeys[i])
+                    switch (m_insertionKeys[i])
                     {
                         case InsertionKey.RoomNumber:
                             toReturn += roomNumber;

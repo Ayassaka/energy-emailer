@@ -1,34 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyEmailer", "EnergyEmailer\EnergyEmailer.csproj", "{D8A0A29D-71BE-44FF-810F-FFC96A4C68C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleDriver", "ConsoleDriver\ConsoleDriver.csproj", "{B7C8C6F7-B8A4-4D2B-A1C3-7B3DF1F83BB2}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://rbstarbuck.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = ConsoleDriver\\ConsoleDriver.csproj
-		SccProjectName1 = ConsoleDriver
-		SccLocalPath1 = ConsoleDriver
-		SccProjectUniqueName2 = EnergyEmailer\\EnergyEmailer.csproj
-		SccProjectName2 = EnergyEmailer
-		SccLocalPath2 = EnergyEmailer
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8A0A29D-71BE-44FF-810F-FFC96A4C68C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8A0A29D-71BE-44FF-810F-FFC96A4C68C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8A0A29D-71BE-44FF-810F-FFC96A4C68C1}.Debug|x86.ActiveCfg = Debug|x86
 		{D8A0A29D-71BE-44FF-810F-FFC96A4C68C1}.Debug|x86.Build.0 = Debug|x86
+		{D8A0A29D-71BE-44FF-810F-FFC96A4C68C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8A0A29D-71BE-44FF-810F-FFC96A4C68C1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8A0A29D-71BE-44FF-810F-FFC96A4C68C1}.Release|x86.ActiveCfg = Release|x86
 		{D8A0A29D-71BE-44FF-810F-FFC96A4C68C1}.Release|x86.Build.0 = Release|x86
+		{B7C8C6F7-B8A4-4D2B-A1C3-7B3DF1F83BB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7C8C6F7-B8A4-4D2B-A1C3-7B3DF1F83BB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7C8C6F7-B8A4-4D2B-A1C3-7B3DF1F83BB2}.Debug|x86.ActiveCfg = Debug|x86
 		{B7C8C6F7-B8A4-4D2B-A1C3-7B3DF1F83BB2}.Debug|x86.Build.0 = Debug|x86
+		{B7C8C6F7-B8A4-4D2B-A1C3-7B3DF1F83BB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7C8C6F7-B8A4-4D2B-A1C3-7B3DF1F83BB2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7C8C6F7-B8A4-4D2B-A1C3-7B3DF1F83BB2}.Release|x86.ActiveCfg = Release|x86
 		{B7C8C6F7-B8A4-4D2B-A1C3-7B3DF1F83BB2}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection

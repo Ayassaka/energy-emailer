@@ -96,7 +96,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxEmailAddress.Location = new System.Drawing.Point(325, 33);
             this.textboxEmailAddress.Name = "textboxEmailAddress";
-            this.textboxEmailAddress.Size = new System.Drawing.Size(160, 20);
+            this.textboxEmailAddress.Size = new System.Drawing.Size(199, 20);
             this.textboxEmailAddress.TabIndex = 1;
             // 
             // labelEmailAddress
@@ -115,7 +115,7 @@
             this.textboxPassword.Location = new System.Drawing.Point(325, 106);
             this.textboxPassword.Name = "textboxPassword";
             this.textboxPassword.PasswordChar = '*';
-            this.textboxPassword.Size = new System.Drawing.Size(160, 20);
+            this.textboxPassword.Size = new System.Drawing.Size(199, 20);
             this.textboxPassword.TabIndex = 4;
             // 
             // labelPassword
@@ -133,7 +133,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxSmtpHostname.Location = new System.Drawing.Point(325, 132);
             this.textboxSmtpHostname.Name = "textboxSmtpHostname";
-            this.textboxSmtpHostname.Size = new System.Drawing.Size(160, 20);
+            this.textboxSmtpHostname.Size = new System.Drawing.Size(199, 20);
             this.textboxSmtpHostname.TabIndex = 5;
             // 
             // labelSmtpHost
@@ -166,7 +166,7 @@
             // 
             this.labelEnableSSL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelEnableSSL.AutoSize = true;
-            this.labelEnableSSL.Location = new System.Drawing.Point(396, 161);
+            this.labelEnableSSL.Location = new System.Drawing.Point(435, 161);
             this.labelEnableSSL.Name = "labelEnableSSL";
             this.labelEnableSSL.Size = new System.Drawing.Size(66, 13);
             this.labelEnableSSL.TabIndex = 11;
@@ -178,7 +178,7 @@
             this.checkboxEnableSSL.AutoSize = true;
             this.checkboxEnableSSL.Checked = true;
             this.checkboxEnableSSL.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkboxEnableSSL.Location = new System.Drawing.Point(468, 161);
+            this.checkboxEnableSSL.Location = new System.Drawing.Point(507, 161);
             this.checkboxEnableSSL.Name = "checkboxEnableSSL";
             this.checkboxEnableSSL.Size = new System.Drawing.Size(15, 14);
             this.checkboxEnableSSL.TabIndex = 7;
@@ -215,7 +215,7 @@
             // buttonTestAccount
             // 
             this.buttonTestAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonTestAccount.Location = new System.Drawing.Point(379, 185);
+            this.buttonTestAccount.Location = new System.Drawing.Point(418, 185);
             this.buttonTestAccount.Name = "buttonTestAccount";
             this.buttonTestAccount.Size = new System.Drawing.Size(104, 22);
             this.buttonTestAccount.TabIndex = 11;
@@ -229,7 +229,7 @@
             this.comboBoxWorksheetSelector.FormattingEnabled = true;
             this.comboBoxWorksheetSelector.Location = new System.Drawing.Point(108, 249);
             this.comboBoxWorksheetSelector.Name = "comboBoxWorksheetSelector";
-            this.comboBoxWorksheetSelector.Size = new System.Drawing.Size(154, 21);
+            this.comboBoxWorksheetSelector.Size = new System.Drawing.Size(193, 21);
             this.comboBoxWorksheetSelector.TabIndex = 13;
             this.comboBoxWorksheetSelector.SelectedIndexChanged += new System.EventHandler(this.comboBoxWorksheetSelector_SelectedIndexChanged);
             // 
@@ -240,7 +240,7 @@
             this.fileToolStripMenuItem});
             this.menuStripTop.Location = new System.Drawing.Point(0, 0);
             this.menuStripTop.Name = "menuStripTop";
-            this.menuStripTop.Size = new System.Drawing.Size(495, 24);
+            this.menuStripTop.Size = new System.Drawing.Size(534, 24);
             this.menuStripTop.TabIndex = 20;
             this.menuStripTop.Text = "menuStripTop";
             // 
@@ -273,7 +273,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBarSending.Location = new System.Drawing.Point(10, 346);
             this.progressBarSending.Name = "progressBarSending";
-            this.progressBarSending.Size = new System.Drawing.Size(471, 21);
+            this.progressBarSending.Size = new System.Drawing.Size(510, 21);
             this.progressBarSending.TabIndex = 22;
             // 
             // labelExcelWorksheet
@@ -331,7 +331,7 @@
             // buttonSend
             // 
             this.buttonSend.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonSend.Location = new System.Drawing.Point(167, 298);
+            this.buttonSend.Location = new System.Drawing.Point(187, 298);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(173, 32);
             this.buttonSend.TabIndex = 16;
@@ -342,7 +342,7 @@
             // buttonLoadWorksheet
             // 
             this.buttonLoadWorksheet.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.buttonLoadWorksheet.Location = new System.Drawing.Point(269, 247);
+            this.buttonLoadWorksheet.Location = new System.Drawing.Point(308, 247);
             this.buttonLoadWorksheet.Name = "buttonLoadWorksheet";
             this.buttonLoadWorksheet.Size = new System.Drawing.Size(104, 22);
             this.buttonLoadWorksheet.TabIndex = 14;
@@ -353,7 +353,7 @@
             // buttonCloseWorksheet
             // 
             this.buttonCloseWorksheet.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.buttonCloseWorksheet.Location = new System.Drawing.Point(379, 247);
+            this.buttonCloseWorksheet.Location = new System.Drawing.Point(418, 247);
             this.buttonCloseWorksheet.Name = "buttonCloseWorksheet";
             this.buttonCloseWorksheet.Size = new System.Drawing.Size(104, 22);
             this.buttonCloseWorksheet.TabIndex = 15;
@@ -376,7 +376,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxUsername.Location = new System.Drawing.Point(325, 57);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(160, 20);
+            this.textBoxUsername.Size = new System.Drawing.Size(199, 20);
             this.textBoxUsername.TabIndex = 2;
             // 
             // textBoxDisplayName
@@ -385,7 +385,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDisplayName.Location = new System.Drawing.Point(325, 82);
             this.textBoxDisplayName.Name = "textBoxDisplayName";
-            this.textBoxDisplayName.Size = new System.Drawing.Size(160, 20);
+            this.textBoxDisplayName.Size = new System.Drawing.Size(199, 20);
             this.textBoxDisplayName.TabIndex = 3;
             // 
             // labelAlias
@@ -409,7 +409,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 381);
+            this.ClientSize = new System.Drawing.Size(534, 381);
             this.Controls.Add(this.labelAlias);
             this.Controls.Add(this.textBoxDisplayName);
             this.Controls.Add(this.textBoxUsername);
@@ -442,6 +442,7 @@
             this.Controls.Add(this.buttonSaveAccount);
             this.Controls.Add(this.menuStripTop);
             this.MainMenuStrip = this.menuStripTop;
+            this.MinimumSize = new System.Drawing.Size(500, 400);
             this.Name = "MainForm";
             this.Text = "Energy Report Card Emailer";
             this.Shown += new System.EventHandler(this.MainForm_Shown);

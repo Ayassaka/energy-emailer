@@ -224,12 +224,21 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ReportCard_Control.html" />
-    <Content Include="ReportCard_Generic.html" />
-    <Content Include="ReportCard_Personalized %28old%29.html" />
-    <Content Include="ReportCard_Personalized.html" />
+    <Content Include="html\ReportCard_Control.html" />
+    <Content Include="html\ReportCard_Generic.html" />
+    <Content Include="html\ReportCard_Personalized %28old%29.html" />
+    <Content Include="html\ReportCard_Personalized.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>if not exist "$(TargetDir)bin" mkdir "$(TargetDir)bin"
+if not exist "$(TargetDir)html" mkdir "$(TargetDir)html"
+if not exist "$(TargetDir)html" xcopy "$(ProjectDir)html" "$(TargetDir)html" /s</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

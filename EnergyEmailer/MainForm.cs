@@ -59,9 +59,11 @@ namespace EnergyEmailer
                     {
                         List<Account> acctList = (List<Account>)binaryFormatter.Deserialize(stream);
                         foreach (Account account in acctList)
+                        {
                             accounts.Add(account);
+                        }
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) 
                     {
                         MessageBox.Show(
                             "The stored account data in \"bin\\accounts.bin\" was corrupted. The file will be deleted, and all stored accounts will be lost.",

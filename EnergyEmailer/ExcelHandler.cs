@@ -142,7 +142,7 @@ namespace EnergyEmailer
                 EmailAddress = Convert.ToString(table[rowNum, COL_EMAIL_ADDRESS]);
                 var addr = new System.Net.Mail.MailAddress(EmailAddress);
             }
-            catch (Exception ex)
+            catch
             {
                 throw new InvalidExcelEntryException("Email address", table[rowNum, COL_EMAIL_ADDRESS].ToString());
             }
@@ -152,10 +152,10 @@ namespace EnergyEmailer
                 MessageType = Convert.ToInt32(table[rowNum, COL_MESSAGE_TYPE]);
                 if (MessageType < 0 || MessageType > 2)
                 {
-                    throw new InvalidExcelEntryException("Message type", table[rowNum, COL_MESSAGE_TYPE].ToString());
+                    throw new Exception();
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 throw new InvalidExcelEntryException("Message type", table[rowNum, COL_MESSAGE_TYPE].ToString());
             }
@@ -164,7 +164,7 @@ namespace EnergyEmailer
             {
                 RoomNumber = Convert.ToString(table[rowNum, COL_ROOM_NUMBER]);
             }
-            catch (Exception ex)
+            catch
             {
                 throw new InvalidExcelEntryException("Room number", table[rowNum, COL_ROOM_NUMBER].ToString());
             }
@@ -173,7 +173,7 @@ namespace EnergyEmailer
             {
                 YourEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_YOU]);
             }
-            catch (Exception ex)
+            catch
             {
                 throw new InvalidExcelEntryException("Resident's energy use", table[rowNum, COL_ENERGY_YOU].ToString());
             }
@@ -182,7 +182,7 @@ namespace EnergyEmailer
             {
                 OtherEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_OTHER]);
             }
-            catch (Exception ex)
+            catch
             {
                 throw new InvalidExcelEntryException("Compared energy use", table[rowNum, COL_ENERGY_OTHER].ToString());
             }
@@ -191,7 +191,7 @@ namespace EnergyEmailer
             {
                 BestEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_BEST]);
             }
-            catch (Exception ex)
+            catch
             {
                 throw new InvalidExcelEntryException("Best energy use", table[rowNum, COL_ENERGY_OTHER].ToString());
             }
@@ -203,10 +203,10 @@ namespace EnergyEmailer
                     Rating = Convert.ToInt32(table[rowNum, COL_RATING]);
                     if (Rating < 1 || Rating > 3)
                     {
-                        throw new InvalidExcelEntryException("Rating", table[rowNum, COL_RATING].ToString());
+                        throw new Exception();
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     throw new InvalidExcelEntryException("Rating", table[rowNum, COL_RATING].ToString());
                 }

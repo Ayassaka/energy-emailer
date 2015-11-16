@@ -1,0 +1,66 @@
+<html>
+<body>
+
+
+<center>
+
+<font face="arial,helvetica,verdana" size="4">
+<p>Room {NUM}'s Weekly Energy Use Report Card</p>
+</font>
+
+<table border=0 cellspacing="0" cellpadding="5">
+    <tr>
+        <td colspan=2><center><font size="3" face="arial,helvetica,verdana"><b>COMPARISON</b></font></center></td>
+        <td></td>
+        <td><center><font size="3" face="arial,helvetica,verdana"><b>RATING</b></font></center></td>
+    </tr>
+    <tr>
+        <td valign="top" align="center">
+            <table border=0 cellspacing="0" cellpadding="3">
+                <tr>
+                    <td width=70 height={hYOU_T}></td>
+                </tr>
+                <tr>
+                    <td width=70 height={hYOU_B} bgcolor="4466bb" valign="bottom"><center><b><font face="calibri" color="white" size="5">{YOU}</font></b><br /><font face="calibri" color="white">kWh</font></center></font></td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top" align="center">
+            <table border=0 cellspacing="0" cellpadding="3">
+                <tr>
+                    <td width=70 height={hOTH_T}></td>
+                </tr>
+                <tr>
+                    <td width=70 height={hOTH_B} bgcolor="919999" valign="bottom"><center><b><font face="calibri" color="white" size="5">{OTH}</font></b><br /><font face="calibri" color="white">kWh</font></center></td>
+                </tr>
+            </table>            
+        </td>
+        
+        <td width=8></td>
+        <td>
+            <p><font face="calibri" color="{cEX}" size="4"><b><i>Excellent</i></b></font> <img src="{iEX}" alt="*" width=22 height=20 align=center /><img src="{iEX}" alt="*" width=22 height=20 align=center /></p>
+            <p><font face="calibri" color="{cGD}" size="4"><b><i>Good</i></b></font> <img src="{iGD}" alt="*" width=22 height=20 align=center /></p>
+            <p><font face="calibri" color="{cPR}" size="4"><b><i>Poor</i></b></font> <img src="{iPR}" alt=":(" width=22 height=20 align=center /></p>
+        </td>
+    </tr>
+    <tr>
+        <td width=70 valign="top"><font face="arial,helvetica,verdana" size="2"><center><b>You</b></center></font></td>
+        <td width=70 valign="top"><font face="arial,helvetica,verdana" size="2"><center><b>Similar Residents*</b></center></font></td>
+        <td colspan=2></td>
+    </tr>
+</table>
+
+
+<font face="arial,helvetica,verdana">
+<p>Last week you used <b><i>{YOU} kWh</i></b> of energy.<br />Residents <i>most similar</i> to you used <b><i>{OTH} kWh</i></b>.</p>
+</font>
+<font face="arial,helvetica,verdana" size="2">
+<p>*These are residents most like you in behavior.<br />For example, other night-centric energy users.</p>
+</font>
+
+
+</center>
+
+
+</body>
+</html>
