@@ -22,22 +22,22 @@ namespace EnergyEmailer
         private const int COL_ENERGY_OTHER = 5;
         private const int COL_RATING = 6;
 
-        private bool willLoadSavedData = false;
-        private BindingList<Account> accounts;
+        private bool m_willLoadSavedData = false;
+        private BindingList<Account> m_accounts;
 
-        private Excel.Application xlApp = new Excel.Application();
-        private Excel.Workbooks xlWorkbooks;
-        private Excel.Workbook xlWorkbook;
-        private Excel.Sheets xlSheets;
-        private Dictionary<string, Excel.Worksheet> xlWorksheets;
-        private List<ExcelRow> writeableEntries;
+        private Excel.Application m_xlApp = new Excel.Application();
+        private Excel.Workbooks m_xlWorkbooks;
+        private Excel.Workbook m_xlWorkbook;
+        private Excel.Sheets m_xlSheets;
+        private Dictionary<string, Excel.Worksheet> m_xlWorksheets;
+        private List<ExcelRow> m_writeableEntries;
 
         private Excel.Worksheet CurrentSheet
         {
             get
             {
-                if (xlWorkbook != null)
-                    return xlWorksheets[(string)comboBoxWorksheetSelector.SelectedItem];
+                if (m_xlWorkbook != null)
+                    return m_xlWorksheets[(string)comboBoxWorksheetSelector.SelectedItem];
                 else
                     return null;
             }
@@ -47,8 +47,8 @@ namespace EnergyEmailer
         {
             InitializeComponent();
 
-            accounts = new BindingList<Account>();
-            accounts.Add(new Account("<Create New Account>", "", "", "", "", 587, true));
+            m_accounts = new BindingList<Account>();
+            m_accounts.Add(new Account("<Create New Account>", "", "", "", "", 587, true));
 
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             using (Stream stream = File.Open(@"bin\accounts.bin", FileMode.OpenOrCreate))
@@ -60,7 +60,7 @@ namespace EnergyEmailer
                         List<Account> acctList = (List<Account>)binaryFormatter.Deserialize(stream);
                         foreach (Account account in acctList)
                         {
-                            accounts.Add(account);
+                            m_accounts.Add(account);
                         }
                     }
                     catch (Exception ex) 
@@ -74,7 +74,7 @@ namespace EnergyEmailer
                 }
             }
 
-            listboxSavedAccounts.DataSource = accounts;
+            listboxSavedAccounts.DataSource = m_accounts;
             listboxSavedAccounts.DisplayMember = "EmailAddress";
 
             if (File.Exists(@"bin\inprog_data.bin") && File.Exists(@"bin\inprog_account.bin") && File.Exists(@"bin\inprog_count.bin"))
@@ -86,32 +86,32 @@ namespace EnergyEmailer
 
                 if (loadData == System.Windows.Forms.DialogResult.Yes)
                 {
-                    willLoadSavedData = true;
+                    m_willLoadSavedData = true;
                 }
             }
         }
 
         ~MainForm()
         {
-            xlWorkbook.Close();
-            xlWorkbooks.Close();
-            xlApp.Quit();
+            m_xlWorkbook.Close();
+            m_xlWorkbooks.Close();
+            m_xlApp.Quit();
 
-            foreach (Excel.Worksheet sheet in xlWorksheets.Values)
+            foreach (Excel.Worksheet sheet in m_xlWorksheets.Values)
             {
                 Marshal.ReleaseComObject(sheet);
             }
-            xlWorksheets = null;
+            m_xlWorksheets = null;
 
-            while (Marshal.ReleaseComObject(xlSheets) != 0) { }
-            while (Marshal.ReleaseComObject(xlWorkbook) != 0) { }
-            while (Marshal.ReleaseComObject(xlWorkbooks) != 0) { }
-            while (Marshal.ReleaseComObject(xlApp) != 0) { }
+            while (Marshal.ReleaseComObject(m_xlSheets) != 0) { }
+            while (Marshal.ReleaseComObject(m_xlWorkbook) != 0) { }
+            while (Marshal.ReleaseComObject(m_xlWorkbooks) != 0) { }
+            while (Marshal.ReleaseComObject(m_xlApp) != 0) { }
 
-            xlSheets = null;
-            xlWorkbook = null;
-            xlWorkbooks = null;
-            xlApp = null;
+            m_xlSheets = null;
+            m_xlWorkbook = null;
+            m_xlWorkbooks = null;
+            m_xlApp = null;
         }
 
         private void LoadSavedData()
@@ -127,13 +127,13 @@ namespace EnergyEmailer
                 using (Stream accountStream = File.Open(@"bin\inprog_account.bin", FileMode.Open))
                 using (Stream countStream = File.Open(@"bin\inprog_count.bin", FileMode.Open))
                 {
-                    writeableEntries = (List<ExcelRow>)binaryFormatter.Deserialize(dataStream);
+                    m_writeableEntries = (List<ExcelRow>)binaryFormatter.Deserialize(dataStream);
                     loadedAccount = (Account)binaryFormatter.Deserialize(accountStream);
                     progCount = (int)binaryFormatter.Deserialize(countStream);
                 }
 
                 populateFields(loadedAccount);
-                labelTotalEntriesValue.Text = writeableEntries.Count.ToString();
+                labelTotalEntriesValue.Text = m_writeableEntries.Count.ToString();
                 labelExcelWorkbookName.Text = "Previously Stored Data";
 
                 sendAllEmails(loadedAccount, progCount);
@@ -308,7 +308,7 @@ namespace EnergyEmailer
 
         private bool isWorksheetValid()
         {
-            if (writeableEntries == null)
+            if (m_writeableEntries == null)
             {
                 MessageBox.Show("Please load a worksheet.", "Error");
                 return false;
@@ -319,7 +319,7 @@ namespace EnergyEmailer
 
         private void saveAccounts()
         {
-            List<Account> acctList = accounts.ToList<Account>();
+            List<Account> acctList = m_accounts.ToList<Account>();
 
             using (Stream stream = File.Open(@"bin\accounts.bin", FileMode.OpenOrCreate))
             {
@@ -340,16 +340,16 @@ namespace EnergyEmailer
             {
                 filepath = fileDialog.FileName;
 
-                xlWorkbooks = xlApp.Workbooks;
-                xlWorkbook = xlWorkbooks.Open(filepath, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
-                xlSheets = xlWorkbook.Worksheets;
-                xlWorksheets = new Dictionary<string, Excel.Worksheet>();
-                foreach (Excel.Worksheet sheet in xlSheets)
+                m_xlWorkbooks = m_xlApp.Workbooks;
+                m_xlWorkbook = m_xlWorkbooks.Open(filepath, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                m_xlSheets = m_xlWorkbook.Worksheets;
+                m_xlWorksheets = new Dictionary<string, Excel.Worksheet>();
+                foreach (Excel.Worksheet sheet in m_xlSheets)
                 {
-                    xlWorksheets.Add(sheet.Name, sheet);
+                    m_xlWorksheets.Add(sheet.Name, sheet);
                 }
 
-                comboBoxWorksheetSelector.DataSource = xlWorksheets.Keys.ToList<string>();
+                comboBoxWorksheetSelector.DataSource = m_xlWorksheets.Keys.ToList<string>();
 
                 labelExcelWorkbookName.Text = "\"" + Path.GetFileName(filepath) + "\"";
             }
@@ -359,8 +359,8 @@ namespace EnergyEmailer
         {
             if (isWorkbookValid())
             {
-                writeableEntries = ExcelHandler.GetWorksheet(CurrentSheet);
-                if (writeableEntries != null)
+                m_writeableEntries = ExcelHandler.GetWorksheet(CurrentSheet);
+                if (m_writeableEntries != null)
                 {
                     comboBoxWorksheetSelector.Enabled = false;
                 }
@@ -369,7 +369,7 @@ namespace EnergyEmailer
 
         private void closeWorksheet()
         {
-            writeableEntries = null;
+            m_writeableEntries = null;
             try
             {
                 File.Delete(@"bin\inprog_count.bin");
@@ -383,25 +383,25 @@ namespace EnergyEmailer
 
         private void sendAllEmails(Account account, int startingIndex = 0)
         {
-            if (writeableEntries != null)
+            if (m_writeableEntries != null)
             {
                 BinaryFormatter binaryFormatter = new BinaryFormatter();
                 Dictionary<int, string> undeliverable = new Dictionary<int, string>();
 
-                progressBarSending.Maximum = writeableEntries.Count;
+                progressBarSending.Maximum = m_writeableEntries.Count;
                 progressBarSending.Value = startingIndex;
 
-                if (!willLoadSavedData)
+                if (!m_willLoadSavedData)
                 {
                     using (Stream dataStream = File.Open(@"bin\inprog_data.bin", FileMode.Create))
                     using (Stream accountStream = File.Open(@"bin\inprog_account.bin", FileMode.Create))
                     {
-                        binaryFormatter.Serialize(dataStream, writeableEntries);
+                        binaryFormatter.Serialize(dataStream, m_writeableEntries);
                         binaryFormatter.Serialize(accountStream, account);
                     }
                 }
 
-                for (int i = startingIndex; i < writeableEntries.Count; ++i)
+                for (int i = startingIndex; i < m_writeableEntries.Count; ++i)
                 {
                     using (Stream stream = File.Open(@"bin\inprog_count.bin", FileMode.Create))
                     {
@@ -409,11 +409,11 @@ namespace EnergyEmailer
 
                         try
                         {
-                            Emailer.Send(account, writeableEntries[i]);
+                            Emailer.Send(account, m_writeableEntries[i]);
                         }
                         catch (Exception ex)
                         {
-                            undeliverable.Add(i, writeableEntries[i].EmailAddress);
+                            undeliverable.Add(i, m_writeableEntries[i].EmailAddress);
                         }
 
                     }
@@ -452,11 +452,11 @@ namespace EnergyEmailer
                     newAccount = new Account(newAccount);
 
                 if (index == 0)
-                    accounts.Add(newAccount);
+                    m_accounts.Add(newAccount);
                 else
                 {
-                    accounts.RemoveAt(index);
-                    accounts.Insert(index, newAccount);
+                    m_accounts.RemoveAt(index);
+                    m_accounts.Insert(index, newAccount);
                     listboxSavedAccounts.SelectedIndex = index;
                 }
 
@@ -480,7 +480,7 @@ namespace EnergyEmailer
         {
             if (listboxSavedAccounts.SelectedIndex != 0)
             {
-                accounts.Remove((Account)listboxSavedAccounts.SelectedValue);
+                m_accounts.Remove((Account)listboxSavedAccounts.SelectedValue);
                 saveAccounts();
             }
         }
@@ -573,10 +573,10 @@ namespace EnergyEmailer
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            if (willLoadSavedData)
+            if (m_willLoadSavedData)
             {
                 LoadSavedData();
-                willLoadSavedData = false;
+                m_willLoadSavedData = false;
             }
         }
 

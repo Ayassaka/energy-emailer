@@ -10,9 +10,9 @@ namespace EnergyEmailer
 {
     public static class Emailer
     {
-        private const string MESSAGE_CONTROL = @"html/ReportCard_Control.html";
-        private const string MESSAGE_GENERIC = @"html/ReportCard_Generic.html";
-        private const string MESSAGE_PERSONALIZED = @"html/ReportCard_Personalized.html";
+        private const string MESSAGE_CONTROL = @"html\ReportCard_Control.html";
+        private const string MESSAGE_GENERIC = @"html\ReportCard_Generic.html";
+        private const string MESSAGE_PERSONALIZED = @"html\ReportCard_Personalized.html";
 
 
         public const int MESSAGE_TYPE_CONTROL = 0;
