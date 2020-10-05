@@ -86,11 +86,13 @@ namespace EnergyEmailer
     public class ExcelRow
     {
         private const int COL_EMAIL_ADDRESS = 1;
-        private const int COL_USER_GROUP = 2;
+        private const int COL_EXPERIMENTAL_CONDITION = 2;
         private const int COL_ENERGY_YOU = 3;
-        private const int COL_ENERGY_LOW = 4;
-        private const int COL_ENERGY_HIGH = 5;
-        private const int COL_RATING = 6;
+        private const int COL_RATING = 4;
+        private const int COL_LIFESTYLE = 5;
+        private const int COL_ENERGY_MEAN = 6;
+        private const int COL_ENERGY_LOW = 7;
+        private const int COL_ENERGY_HIGH = 8;
 
         public string EmailAddress
         {
@@ -98,7 +100,13 @@ namespace EnergyEmailer
             private set;
         }
 
-        public int UserGroupId
+        public int ExperimentalCondition
+        {
+            get;
+            private set;
+        }
+
+        public int Lifestyle
         {
             get;
             private set;
@@ -117,6 +125,12 @@ namespace EnergyEmailer
         }
 
         public double LowestEnergyUse
+        {
+            get;
+            private set;
+        }
+
+        public double MeanEnergyUse
         {
             get;
             private set;
@@ -142,15 +156,15 @@ namespace EnergyEmailer
 
             try
             {
-                UserGroupId = Convert.ToInt32(table[rowNum, COL_USER_GROUP]);
-                if (UserGroupId < 1 || UserGroupId > 3)
+                ExperimentalCondition = Convert.ToInt32(table[rowNum, COL_EXPERIMENTAL_CONDITION]);
+                if (ExperimentalCondition < 1 || ExperimentalCondition > 3)
                 {
                     throw new Exception();
                 }
             }
             catch
             {
-                throw new InvalidExcelEntryException("User group", table[rowNum, COL_USER_GROUP].ToString());
+                throw new InvalidExcelEntryException("Lifestyle", table[rowNum, COL_LIFESTYLE].ToString());
             }
 
             try
@@ -162,35 +176,69 @@ namespace EnergyEmailer
                 throw new InvalidExcelEntryException("Resident's energy use", table[rowNum, COL_ENERGY_YOU].ToString());
             }
 
-            try
+            if (ExperimentalCondition != 1)
             {
-                LowestEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_LOW]);
-            }
-            catch
-            {
-                throw new InvalidExcelEntryException("Compared energy use", table[rowNum, COL_ENERGY_LOW].ToString());
-            }
-
-            try
-            {
-                HighestEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_HIGH]);
-            }
-            catch
-            {
-                throw new InvalidExcelEntryException("Best energy use", table[rowNum, COL_ENERGY_HIGH].ToString());
-            }
-
-            try
-            {
-                Rating = Convert.ToInt32(table[rowNum, COL_RATING]);
-                if (Rating < 1 || Rating > 1)
+                try
                 {
-                    throw new Exception();
+                    Rating = Convert.ToInt32(table[rowNum, COL_RATING]);
+                    if (Rating < 1 || Rating > 3)
+                    {
+                        throw new Exception();
+                    }
                 }
-            }
-            catch
-            {
-                throw new InvalidExcelEntryException("Rating", table[rowNum, COL_RATING].ToString());
+                catch
+                {
+                    throw new InvalidExcelEntryException("Rating", table[rowNum, COL_RATING].ToString());
+                }
+
+
+                if (ExperimentalCondition == 3)
+                {
+                    try
+                    {
+                        Lifestyle = Convert.ToInt32(table[rowNum, COL_LIFESTYLE]);
+                        if (Lifestyle < 1 || Lifestyle > 6)
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    catch
+                    {
+                        throw new InvalidExcelEntryException("Lifestyle", table[rowNum, COL_LIFESTYLE].ToString());
+                    }
+                }
+                else
+                {
+                    Lifestyle = 0;
+                }
+
+
+                try
+                {
+                    MeanEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_MEAN]);
+                }
+                catch
+                {
+                    throw new InvalidExcelEntryException("Mean energy use", table[rowNum, COL_ENERGY_LOW].ToString());
+                }
+
+                try
+                {
+                    LowestEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_LOW]);
+                }
+                catch
+                {
+                    throw new InvalidExcelEntryException("Minimum energy use", table[rowNum, COL_ENERGY_LOW].ToString());
+                }
+
+                try
+                {
+                    HighestEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_HIGH]);
+                }
+                catch
+                {
+                    throw new InvalidExcelEntryException("Maximum energy use", table[rowNum, COL_ENERGY_HIGH].ToString());
+                }
             }
         }
     }

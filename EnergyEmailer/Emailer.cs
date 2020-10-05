@@ -23,6 +23,12 @@ namespace EnergyEmailer
         //private static EmailBody s_emailBodyGeneric = new EmailBody(MESSAGE_GENERIC);
         //private static EmailBody s_emailBodyPersonalized = new EmailBody(MESSAGE_PERSONALIZED);
 
+        private static readonly string[] TEMPLATES = {
+            @"html\ReportCard_Control.html",
+            @"html\ReportCard_Neighbor.html",
+            @"html\ReportCard_Lifestyle.html",
+        };
+
         public static void Ping() { }
 
         public static void Send(Account account, ExcelRow entry)
@@ -42,8 +48,8 @@ namespace EnergyEmailer
                 mailMsg.IsBodyHtml = true;
 
                 // Subject and Body
-                mailMsg.Subject = String.Format("Monthly Energy Report Card");
-                mailMsg.Body = new EmailBody(@"html\ReportCard_UserGroup.html").Generate(entry);
+                mailMsg.Subject = String.Format("Your Monthly Energy Report Card");
+                mailMsg.Body = new EmailBody(TEMPLATES[entry.ExperimentalCondition - 1]).Generate(entry);
 
                 // Init SmtpClient and send on port 587 in my case. (Usual=port25)
                 SmtpClient smtpClient = new SmtpClient(account.SmtpHostname, account.PortNumber);
@@ -69,56 +75,87 @@ namespace EnergyEmailer
             const string ENDEM = @"</span>";
             return EM + s + ENDEM;
         }
+
+        private static readonly string[] USER_GROUP_A = {
+            "a",
+            "a",
+            "an",
+            "an",
+            "a",
+            "a",
+            "an",
+        };
+
         private static readonly string[] USER_GROUP_NAMES = {
-            "Undefined User",
-            "Afternoon User",
+            "Neighbor",
+            "Night Owl",
             "Early Bird",
-            "Steady User",
+            "All Nighter",
+            "Midday User",
+            "Sunset User",
+            "Afternoon User",
         };
 
         private static readonly string[] USER_GROUP_TEND_TO = {
-            "Undefined User",
-            "use the most electricity from Noon to Midnight",
+            "*UNDEFINED*",
+            "use the most electricity from Midnight to Sunrise",
             "use the most electricity from Sunrise to Noon",
-            "use electricity steadily all day and night",
+            "use the most electricity from Sunset to Sunrise",
+            "use the most electricity from Sunrise to Sunset",
+            "use the most electricity from Sunrise to Sunset",
+            "use the most electricity from Sunset to Midnight",
+            "use the most electricity from Noon to Midnight",
         };
-
-        private static readonly string[] USER_GROUP_ARE_WHO = {
-            "Undefined User",
-            "use the most energy in the afternoon and evening and live in similar size homes",
-            "use the most energy in the morning and live in similar size homes",
-            "use energy steadily all day and night, and live in similar size homes",
+    
+        private static readonly string[] USER_GROUP_WHEN = {
+            "*UNDEFINED*",
+            "late at night",
+            "in the morning",
+            "all night",
+            "all day",
+            "in the evening",
+            "in the afternoon and evening",
         };
 
         private static readonly string[] USER_GROUP_IMG_URLS = {
-            "",
-            "https://i.ibb.co/h2Fcw3S/group1.png",
-            "https://i.ibb.co/ckmLXff/Picture1.png",
-            "https://i.ibb.co/cJFP697/Picture2.png",
+            @"https://i.ibb.co/rdCNzZ3/Neighbor.png",
+            @"https://i.ibb.co/ByCLbhM/NightOwl.png",
+            @"https://i.ibb.co/HxhNBXv/Early-Bird.png",
+            @"https://i.ibb.co/tbdLfGd/All-Nighter.png",
+            @"https://i.ibb.co/9tffwhn/Midday-Mover.jpg",
+            @"https://i.ibb.co/gmg4gKG/Sunset-User.png",
+            @"https://i.ibb.co/VVVBbpb/Afternoon-User.png",
         };
 
         private static readonly string[] RATING_TITLES = {
             @"Undefined Rating",
-            Emphasize("Good!") + "Keep working at it!",
+            Emphasize("Best!") + "Good job!",
+            Emphasize("Good,") + "keep working at it!",
+            Emphasize("Poor,") + "but keep working at it!",
         };
 
         private static readonly string[] RATING_TEXTS = {
             "Undefined rating.",
+            "You used much less electricity this month than the average {0}.",
             "You used about the same amount of electricity this month as the average {0}.",
+            "You used much more electricity this month than the average {0}.",
         };
     
 
         private enum InsertionKey
         {
             Usage,
+            A,
             UserGroup,
             YouTendTo,
-            PeopleWho,
+            When,
+            Mean,
             Low,
             High,
             RatingTitle,
             RatingText,
-            CursorPos,
+            CursorYou,
+            CursorMean,
             UserGroupImg,
         }
 
@@ -168,15 +205,18 @@ namespace EnergyEmailer
                         switch (words[i])
                         {
                             case "USAGE":         m_insertionKeys.Add(InsertionKey.Usage);        break;
+                            case "A":             m_insertionKeys.Add(InsertionKey.A);            break;
                             case "USER_GROUP":    m_insertionKeys.Add(InsertionKey.UserGroup);    break;
                             case "YOU_TEND_TO":   m_insertionKeys.Add(InsertionKey.YouTendTo);    break;
-                            case "PEOPLE_WHO":    m_insertionKeys.Add(InsertionKey.PeopleWho);    break;
+                            case "WHEN":          m_insertionKeys.Add(InsertionKey.When);         break;
+                            case "MEAN":          m_insertionKeys.Add(InsertionKey.Mean);          break;
                             case "LOW":           m_insertionKeys.Add(InsertionKey.Low);          break;
                             case "HIGH":          m_insertionKeys.Add(InsertionKey.High);         break;
                             case "RATING_TITLE":  m_insertionKeys.Add(InsertionKey.RatingTitle);  break;
                             case "RATING_TEXT":   m_insertionKeys.Add(InsertionKey.RatingText);   break;
-                            case "CURSOR_POS":    m_insertionKeys.Add(InsertionKey.CursorPos);    break;
-                            case "USER_GROUP_IMG":m_insertionKeys.Add(InsertionKey.UserGroupImg);    break;
+                            case "CURSOR_YOU":    m_insertionKeys.Add(InsertionKey.CursorYou);    break;
+                            case "CURSOR_MEAN":   m_insertionKeys.Add(InsertionKey.CursorMean);   break;
+                            case "USER_GROUP_IMG":m_insertionKeys.Add(InsertionKey.UserGroupImg); break;
                             default:
                                 if (m_paragraphText.Count > m_insertionKeys.Count)
                                     m_paragraphText[m_paragraphText.Count - 1] = m_paragraphText[m_paragraphText.Count - 1] + words[i];
@@ -208,15 +248,21 @@ namespace EnergyEmailer
                     {
                         case InsertionKey.Usage:
                             toReturn += String.Format("{0:0.#}", entry.YourEnergyUse);
+                            break;                        
+                        case InsertionKey.A:
+                            toReturn += USER_GROUP_A[entry.Lifestyle];
                             break;
                         case InsertionKey.UserGroup:
-                            toReturn += USER_GROUP_NAMES[entry.UserGroupId];
+                            toReturn += USER_GROUP_NAMES[entry.Lifestyle];
                             break;
                         case InsertionKey.YouTendTo:
-                            toReturn += USER_GROUP_TEND_TO[entry.UserGroupId];
+                            toReturn += USER_GROUP_TEND_TO[entry.Lifestyle];
                             break;
-                        case InsertionKey.PeopleWho:
-                            toReturn += USER_GROUP_ARE_WHO[entry.UserGroupId];
+                        case InsertionKey.When:
+                            toReturn += USER_GROUP_WHEN[entry.Lifestyle];
+                            break;
+                        case InsertionKey.Mean:
+                            toReturn += String.Format("{0:0.#}", entry.MeanEnergyUse);
                             break;
                         case InsertionKey.Low:
                             toReturn += String.Format("{0:0.#}", entry.LowestEnergyUse);
@@ -230,19 +276,27 @@ namespace EnergyEmailer
                         case InsertionKey.RatingText:
                             toReturn += String.Format(
                                 RATING_TEXTS[entry.Rating],
-                                Emphasize(USER_GROUP_NAMES[entry.UserGroupId])
+                                Emphasize(USER_GROUP_NAMES[entry.Lifestyle])
                             );
                             break;
-                        case InsertionKey.CursorPos:
+                        case InsertionKey.CursorYou:
                             toReturn += String.Format(
                                 "{0:0.#}", 
                                 (entry.YourEnergyUse - entry.LowestEnergyUse) /
                                 (entry.HighestEnergyUse - entry.LowestEnergyUse) *
-                                (85.0 - 6.0)
+                                (81.4 - 1.3) + 1.3
+                            );
+                            break;
+                        case InsertionKey.CursorMean:
+                            toReturn += String.Format(
+                                "{0:0.#}", 
+                                (entry.MeanEnergyUse - entry.LowestEnergyUse) /
+                                (entry.HighestEnergyUse - entry.LowestEnergyUse) *
+                                (81.4 - 1.3) + 1.3
                             );
                             break;
                         case InsertionKey.UserGroupImg:
-                            toReturn += USER_GROUP_IMG_URLS[entry.UserGroupId];
+                            toReturn += USER_GROUP_IMG_URLS[entry.Lifestyle];
                             break;
             }
                 }
