@@ -10,18 +10,18 @@ namespace EnergyEmailer
 {
     public static class Emailer
     {
-        private const string MESSAGE_CONTROL = @"html\ReportCard_Control.html";
-        private const string MESSAGE_GENERIC = @"html\ReportCard_Generic.html";
-        private const string MESSAGE_PERSONALIZED = @"html\ReportCard_Personalized.html";
+        //private const string MESSAGE_CONTROL = @"html\ReportCard_Control.html";
+        //private const string MESSAGE_GENERIC = @"html\ReportCard_Generic.html";
+        //private const string MESSAGE_PERSONALIZED = @"html\ReportCard_Personalized.html";
 
 
-        public const int MESSAGE_TYPE_CONTROL = 0;
-        public const int MESSAGE_TYPE_GENERIC = 1;
-        public const int MESSAGE_TYPE_PERSONALIZED = 2;
+        //public const int MESSAGE_TYPE_CONTROL = 0;
+        //public const int MESSAGE_TYPE_GENERIC = 1;
+        //public const int MESSAGE_TYPE_PERSONALIZED = 2;
 
-        private static EmailBody s_emailBodyControl = new EmailBody(MESSAGE_CONTROL);
-        private static EmailBody s_emailBodyGeneric = new EmailBody(MESSAGE_GENERIC);
-        private static EmailBody s_emailBodyPersonalized = new EmailBody(MESSAGE_PERSONALIZED);
+        //private static EmailBody s_emailBodyControl = new EmailBody(MESSAGE_CONTROL);
+        //private static EmailBody s_emailBodyGeneric = new EmailBody(MESSAGE_GENERIC);
+        //private static EmailBody s_emailBodyPersonalized = new EmailBody(MESSAGE_PERSONALIZED);
 
         public static void Ping() { }
 
@@ -42,19 +42,8 @@ namespace EnergyEmailer
                 mailMsg.IsBodyHtml = true;
 
                 // Subject and Body
-                mailMsg.Subject = String.Format("Room {0}'s weekly energy report card", entry.RoomNumber);
-                switch (entry.MessageType)
-                {
-                    case MESSAGE_TYPE_CONTROL:
-                        mailMsg.Body = s_emailBodyControl.Generate(entry.RoomNumber, entry.YourEnergyUse, entry.OtherEnergyUse, entry.BestEnergyUse, entry.Rating);
-                        break;
-                    case MESSAGE_TYPE_GENERIC:
-                        mailMsg.Body = s_emailBodyGeneric.Generate(entry.RoomNumber, entry.YourEnergyUse, entry.OtherEnergyUse, entry.BestEnergyUse, entry.Rating);
-                        break;
-                    case MESSAGE_TYPE_PERSONALIZED:
-                        mailMsg.Body = s_emailBodyPersonalized.Generate(entry.RoomNumber, entry.YourEnergyUse, entry.OtherEnergyUse, entry.BestEnergyUse, entry.Rating);
-                        break;
-                }
+                mailMsg.Subject = String.Format("Monthly Energy Report Card");
+                mailMsg.Body = new EmailBody(@"html\ReportCard_UserGroup.html").Generate(entry);
 
                 // Init SmtpClient and send on port 587 in my case. (Usual=port25)
                 SmtpClient smtpClient = new SmtpClient(account.SmtpHostname, account.PortNumber);
@@ -74,30 +63,63 @@ namespace EnergyEmailer
 
     public class EmailBody
     {
-        private const int RATING_EXCELLENT = 3;
-        private const int RATING_GOOD = 2;
-        private const int RATING_POOR = 1;
-        private const string COLOR_ACTIVE = "ff0000";
-        private const string COLOR_INACTIVE = "777777";
+
+        private static string Emphasize(string s) {
+            const string EM = @"<span style='font-weight:bold;color:#ffff00;'>";
+            const string ENDEM = @"</span>";
+            return EM + s + ENDEM;
+        }
+        private static readonly string[] USER_GROUP_NAMES = {
+            "Undefined User",
+            "Afternoon User",
+            "Early Bird",
+            "Steady User",
+        };
+
+        private static readonly string[] USER_GROUP_TEND_TO = {
+            "Undefined User",
+            "use the most electricity from Noon to Midnight",
+            "use the most electricity from Sunrise to Noon",
+            "use electricity steadily all day and night",
+        };
+
+        private static readonly string[] USER_GROUP_ARE_WHO = {
+            "Undefined User",
+            "use the most energy in the afternoon and evening and live in similar size homes",
+            "use the most energy in the morning and live in similar size homes",
+            "use energy steadily all day and night, and live in similar size homes",
+        };
+
+        private static readonly string[] USER_GROUP_IMG_URLS = {
+            "",
+            "https://i.ibb.co/h2Fcw3S/group1.png",
+            "https://i.ibb.co/ckmLXff/Picture1.png",
+            "https://i.ibb.co/cJFP697/Picture2.png",
+        };
+
+        private static readonly string[] RATING_TITLES = {
+            @"Undefined Rating",
+            Emphasize("Good!") + "Keep working at it!",
+        };
+
+        private static readonly string[] RATING_TEXTS = {
+            "Undefined rating.",
+            "You used about the same amount of electricity this month as the average {0}.",
+        };
+    
 
         private enum InsertionKey
         {
-            RoomNumber,
-            EnergyUsedMe,
-            EnergyUsedOther,
-            EnergyUsedBest,
-            BarGraphHeightMeTop,
-            BarGraphHeightMeBottom,
-            BarGraphHeightOtherTop,
-            BarGraphHeightOtherBottom,
-            BarGraphHeightBestTop,
-            BarGraphHeightBestBottom,
-            ColorExcellent,
-            ColorGood,
-            ColorPoor,
-            imageExcellent,
-            imageGood,
-            imagePoor
+            Usage,
+            UserGroup,
+            YouTendTo,
+            PeopleWho,
+            Low,
+            High,
+            RatingTitle,
+            RatingText,
+            CursorPos,
+            UserGroupImg,
         }
 
         private List<string> m_paragraphText = new List<string>();
@@ -145,54 +167,16 @@ namespace EnergyEmailer
                     {
                         switch (words[i])
                         {
-                            case "YOU":
-                                m_insertionKeys.Add(InsertionKey.EnergyUsedMe);
-                                break;
-                            case "NUM":
-                                m_insertionKeys.Add(InsertionKey.RoomNumber);
-                                break;
-                            case "OTH":
-                                m_insertionKeys.Add(InsertionKey.EnergyUsedOther);
-                                break;
-                            case "EFF":
-                                m_insertionKeys.Add(InsertionKey.EnergyUsedBest);
-                                break;
-                            case "cEX":
-                                m_insertionKeys.Add(InsertionKey.ColorExcellent);
-                                break;
-                            case "cGD":
-                                m_insertionKeys.Add(InsertionKey.ColorGood);
-                                break;
-                            case "cPR":
-                                m_insertionKeys.Add(InsertionKey.ColorPoor);
-                                break;
-                            case "hYOU_T":
-                                m_insertionKeys.Add(InsertionKey.BarGraphHeightMeTop);
-                                break;
-                            case "hYOU_B":
-                                m_insertionKeys.Add(InsertionKey.BarGraphHeightMeBottom);
-                                break;
-                            case "hOTH_T":
-                                m_insertionKeys.Add(InsertionKey.BarGraphHeightOtherTop);
-                                break;
-                            case "hOTH_B":
-                                m_insertionKeys.Add(InsertionKey.BarGraphHeightOtherBottom);
-                                break;
-                            case "hEFF_T":
-                                m_insertionKeys.Add(InsertionKey.BarGraphHeightBestTop);
-                                break;
-                            case "hEFF_B":
-                                m_insertionKeys.Add(InsertionKey.BarGraphHeightBestBottom);
-                                break;
-                            case "iEX":
-                                m_insertionKeys.Add(InsertionKey.imageExcellent);
-                                break;
-                            case "iGD":
-                                m_insertionKeys.Add(InsertionKey.imageGood);
-                                break;
-                            case "iPR":
-                                m_insertionKeys.Add(InsertionKey.imagePoor);
-                                break;
+                            case "USAGE":         m_insertionKeys.Add(InsertionKey.Usage);        break;
+                            case "USER_GROUP":    m_insertionKeys.Add(InsertionKey.UserGroup);    break;
+                            case "YOU_TEND_TO":   m_insertionKeys.Add(InsertionKey.YouTendTo);    break;
+                            case "PEOPLE_WHO":    m_insertionKeys.Add(InsertionKey.PeopleWho);    break;
+                            case "LOW":           m_insertionKeys.Add(InsertionKey.Low);          break;
+                            case "HIGH":          m_insertionKeys.Add(InsertionKey.High);         break;
+                            case "RATING_TITLE":  m_insertionKeys.Add(InsertionKey.RatingTitle);  break;
+                            case "RATING_TEXT":   m_insertionKeys.Add(InsertionKey.RatingText);   break;
+                            case "CURSOR_POS":    m_insertionKeys.Add(InsertionKey.CursorPos);    break;
+                            case "USER_GROUP_IMG":m_insertionKeys.Add(InsertionKey.UserGroupImg);    break;
                             default:
                                 if (m_paragraphText.Count > m_insertionKeys.Count)
                                     m_paragraphText[m_paragraphText.Count - 1] = m_paragraphText[m_paragraphText.Count - 1] + words[i];
@@ -211,7 +195,7 @@ namespace EnergyEmailer
             }
         }
 
-        public string Generate(string roomNumber, double energyUsedMe, double energyUsedOther, double energyUsedBest, int rating)
+        public string Generate(ExcelRow entry)
         {
             string toReturn = "";
 
@@ -222,83 +206,48 @@ namespace EnergyEmailer
                 {
                     switch (m_insertionKeys[i])
                     {
-                        case InsertionKey.RoomNumber:
-                            toReturn += roomNumber;
+                        case InsertionKey.Usage:
+                            toReturn += String.Format("{0:0.#}", entry.YourEnergyUse);
                             break;
-                        case InsertionKey.EnergyUsedMe:
-                            toReturn += String.Format("{0:0.#}", energyUsedMe);
+                        case InsertionKey.UserGroup:
+                            toReturn += USER_GROUP_NAMES[entry.UserGroupId];
                             break;
-                        case InsertionKey.EnergyUsedOther:
-                            toReturn += String.Format("{0:0.#}", energyUsedOther);
+                        case InsertionKey.YouTendTo:
+                            toReturn += USER_GROUP_TEND_TO[entry.UserGroupId];
                             break;
-                        case InsertionKey.EnergyUsedBest:
-                            toReturn += String.Format("{0:0.#}", energyUsedBest);
+                        case InsertionKey.PeopleWho:
+                            toReturn += USER_GROUP_ARE_WHO[entry.UserGroupId];
                             break;
-                        case InsertionKey.BarGraphHeightMeTop:
-                            toReturn += BarGraphHeightTop(energyUsedMe, energyUsedOther);
+                        case InsertionKey.Low:
+                            toReturn += String.Format("{0:0.#}", entry.LowestEnergyUse);
                             break;
-                        case InsertionKey.BarGraphHeightMeBottom:
-                            toReturn += BarGraphHeightBottom(energyUsedMe, energyUsedOther);
+                        case InsertionKey.High:
+                            toReturn += String.Format("{0:0.#}", entry.HighestEnergyUse);
                             break;
-                        case InsertionKey.BarGraphHeightOtherTop:
-                            toReturn += BarGraphHeightTop(energyUsedOther, energyUsedMe);
+                        case InsertionKey.RatingTitle:
+                            toReturn += RATING_TITLES[entry.Rating];
                             break;
-                        case InsertionKey.BarGraphHeightOtherBottom:
-                            toReturn += BarGraphHeightBottom(energyUsedOther, energyUsedMe);
+                        case InsertionKey.RatingText:
+                            toReturn += String.Format(
+                                RATING_TEXTS[entry.Rating],
+                                Emphasize(USER_GROUP_NAMES[entry.UserGroupId])
+                            );
                             break;
-                        case InsertionKey.BarGraphHeightBestTop:
-                            toReturn += BarGraphHeightTop(energyUsedBest, (energyUsedMe > energyUsedOther ? energyUsedMe : energyUsedOther));
+                        case InsertionKey.CursorPos:
+                            toReturn += String.Format(
+                                "{0:0.#}", 
+                                (entry.YourEnergyUse - entry.LowestEnergyUse) /
+                                (entry.HighestEnergyUse - entry.LowestEnergyUse) *
+                                (85.0 - 6.0)
+                            );
                             break;
-                        case InsertionKey.BarGraphHeightBestBottom:
-                            toReturn += BarGraphHeightBottom(energyUsedBest, (energyUsedMe > energyUsedOther ? energyUsedMe : energyUsedOther));
+                        case InsertionKey.UserGroupImg:
+                            toReturn += USER_GROUP_IMG_URLS[entry.UserGroupId];
                             break;
-                        case InsertionKey.ColorExcellent:
-                            toReturn += (rating == RATING_EXCELLENT ? COLOR_ACTIVE : COLOR_INACTIVE);
-                            break;
-                        case InsertionKey.ColorGood:
-                            toReturn += (rating == RATING_GOOD ? COLOR_ACTIVE : COLOR_INACTIVE);
-                            break;
-                        case InsertionKey.ColorPoor:
-                            toReturn += (rating == RATING_POOR ? COLOR_ACTIVE : COLOR_INACTIVE);
-                            break;
-                        case InsertionKey.imageExcellent:
-                            toReturn += (rating == RATING_EXCELLENT ? @"http://s3.postimg.org/7f1yxnajj/star_active.png" : @"http://s30.postimg.org/oxs6v1u2l/star_inactive.png");
-                            break;
-                        case InsertionKey.imageGood:
-                            toReturn += (rating == RATING_GOOD ? @"http://s3.postimg.org/7f1yxnajj/star_active.png" : @"http://s30.postimg.org/oxs6v1u2l/star_inactive.png");
-                            break;
-                        case InsertionKey.imagePoor:
-                            toReturn += (rating == RATING_POOR ? @"http://s29.postimg.org/4l43qfsc3/frown_active.png" : @"http://s14.postimg.org/5rawx4sst/frown_inactive.png");
-                            break;
-                    }
+            }
                 }
             }
-
             return toReturn;
         }
-
-        public string BarGraphHeightTop(double thisBarUsage, double otherBarUsage)
-        {
-            if (thisBarUsage >= otherBarUsage || otherBarUsage <= 0)
-                return "1";
-            else
-            {
-                int height = 150 - (int)(thisBarUsage / otherBarUsage * 150.0);
-                return (height >= 100 || thisBarUsage == 0 ? "100" : height.ToString());
-            }
-        }
-
-        public string BarGraphHeightBottom(double thisBarUsage, double otherBarUsage)
-        {
-            if (thisBarUsage >= otherBarUsage || otherBarUsage <= 0)
-                return "149";
-            else
-            {
-                int height = (int)(thisBarUsage / otherBarUsage * 150.0);
-                return (height <= 50 || thisBarUsage == 0 ? "50" : height.ToString());
-            }
-        }
-
-
     }
 }

@@ -1,0 +1,203 @@
+<html>
+<head>
+  <style>
+    .ug {
+      font-weight: bold;
+      color: #ffff00;
+    }
+    .c {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hline {
+      height: 1px;
+      width: 100%;
+      background-color: white;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .vspace {
+      height: 10px;
+    }
+    .fill-black {
+      background-color: black;
+    }
+    .fill-white {
+      background-color: white;
+    }
+    ul {
+      margin: 0px;
+    }
+  </style>
+</head>
+<body>
+
+<div style="
+  font-family: Arial,Helvetica,sans-serif;
+  line-height: 1.2;
+  font-size: 17px;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  width: 600px;
+  background-color: #f2f2f2;
+">
+  <div style="background-color: white; padding: 10px;">
+    <div style="
+      position: relative;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      height: 42px;
+      width: 40px;
+      background-image: url(https://i.ibb.co/LP5w4Sk/house.png);
+      background-size: contain;
+      padding: 28px 20px 10px 20px;
+    ">
+      <div style="
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+        background-color: #a09e9e;
+      ">
+        <span style="font-size: 20px;">{USAGE}</span>
+        <br>
+        <span style="font-size: 15px;">kWh</span>
+      </div>
+    </div>
+    <div style="text-align: center; margin: 10px;">
+      <div class="hline fill-black"></div>
+      <div style="font-weight: bold; margin: 2px;">
+        Energy Consumption
+      </div>
+      <div class="hline fill-black"></div>
+    </div>
+    <ul>
+      <li>You used {USAGE} kWh of electricity this month.
+      </li>
+    </ul>
+  </div>
+  <div class="vspace"></div>
+  <div style="background-color: #951935; padding: 10px; color: white;">
+    <div style="height: 100px; width: 85%; margin-left: auto; margin-right: auto;">
+      <img src="https://i.ibb.co/h2Fcw3S/group1.png" alt="group1" border="0" style="max-height: 100px; border-radius: 50%; margin-right: 5%; float: left;">
+      <table style="height: 100px; color: white; font-size: 17px"><tr><td>
+        <span class="c" style="font-size: 22">
+          You are an <span class="ug">Afternoon User</span>.
+        </span>
+      </td></tr></table>
+    </div>
+    <div style="text-align: center; margin: 10px;">
+      <div class="hline fill-white"></div>
+      <div style="font-weight: bold; margin: 2px;">
+        Time of Energy Use
+      </div>
+      <div class="hline fill-white"></div>
+    </div>
+    <ul>
+      <li>
+        You tend to use the most electricity from Noon to Midnight, making you an <span class="ug">Afternoon User</span>.
+      </li>
+      <li>
+        We are interested in comparing you to other <span class="ug">Afternoon Users</span>.
+      </li>
+    </ul>
+    <div style="
+      border-radius: 10px;
+      color: black;
+      background-color: #ead1d7;
+      padding: 10px;
+      margin: 10px 10px 0px 10px;
+    ">
+      <div style="font-weight: bold; margin: 2px; text-align: center;">
+        What do we mean by Afternoon Users?
+      </div>
+      <ul>
+        <li>
+          People who use the most energy in the afternoon and evening and live in similar size homes.
+        </li>
+        <div style="height: 5px;"></div>
+        <li>
+          Afternoon Users share similar lifestyles and tend to be active at home during the same time of day.
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="vspace"></div>
+  <div style="background-color: #9aae66; padding: 10px; color: white;">
+    <div style="font-size: 20px; text-align: center;">
+      {RATING_TITLE}
+    </div>
+    <div style="width: 30px; text-align: center;"></div>
+    <div class="vspace"></div>
+    <div style="text-align: center; font-size: 13px; width: 50px; margin-left: 40%; margin-bottom: 5px;">
+      You<Br>
+        <img src="https://i.ibb.co/hRBDDRZ/Untitled-3.png" alt="↓" height="15">
+    </div>
+      <div style="
+        height: 20px;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        background-image: linear-gradient(to right, #71ad48, white, red);
+        border: #f2f2f2 solid 1px;
+      ">
+        {LOW} <span style="float: right;">{HIGH}</span>
+      </div>
+      <div style="text-align: center; font-size: 13px; width: 50px; margin-left: 40%; margin-bottom: 5px;">
+        {USAGE}<Br>
+          kWh
+      </div>
+      
+    
+    <div style="text-align: center; margin: 10px;">
+      <div class="hline fill-white"></div>
+      <div style="font-weight: bold; margin: 2px;">
+        Energy Efficiency
+      </div>
+      <div class="hline fill-white"></div>
+    </div>
+    <ul>
+      <li>
+        Your average <span class="ug">Afternoon User</span> uses between {LOW} and {HIGH} kWh of electricity each month.
+      </li>
+      <div style="height: 5px;"></div>
+      <li>
+        {RATING_TEXT}
+      </li>
+    </ul>
+  </div>
+  <div class="vspace"></div>
+  <div style="background-color: #161645; padding: 10px; color: white;">
+    <div style="min-height: 110px">
+      <img src="https://i.ibb.co/CMTTSHn/ico1.png" alt="ico1" border="0" style="max-height: 100px; border-radius: 50%; vertical-align: middle; float: left; margin: 5px; margin-right: 30px;">
+        <ul>
+          <li><span class="ug">You and other Afternoon Users</span> could make a significant contribution to energy conservation.
+          </li>
+          <div style="height: 5px;"></div>
+          <li>
+            Particularly, compared to other groups of people, <span class="ug">you and other Afternoon Users</span> can save the most energy in the afternoon and evening.
+          </li>
+        </ul>
+      </div>
+    <div style="
+      border-top: 1px dashed white; margin: 10px;
+    "></div>
+    <div style="min-height: 110px;">
+      <img src="https://i.ibb.co/vxWFcHj/ico2.png" alt="ico2" border="0" style="max-height: 100px; border-radius: 50%; vertical-align: middle; float: left; margin: 5px; margin-right: 30px;">
+        <ul>
+          <li>
+            On our website, you are able to find what actions <span class="ug">other Afternoon Users</span> have taken to reduce energy.
+          </li>
+          <div style="height: 5px;"></div>
+          <li>
+            Also, you can share your experience with other <span class="ug">Afternoon Users</span>.
+          </li>
+        </ul>
+    </div>
+  </div>
+</body>
+</html>

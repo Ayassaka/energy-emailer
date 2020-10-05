@@ -86,12 +86,11 @@ namespace EnergyEmailer
     public class ExcelRow
     {
         private const int COL_EMAIL_ADDRESS = 1;
-        private const int COL_MESSAGE_TYPE = 2;
-        private const int COL_ROOM_NUMBER = 3;
-        private const int COL_ENERGY_YOU = 4;
-        private const int COL_ENERGY_OTHER = 5;
-        private const int COL_ENERGY_BEST = 6;
-        private const int COL_RATING = 7;
+        private const int COL_USER_GROUP = 2;
+        private const int COL_ENERGY_YOU = 3;
+        private const int COL_ENERGY_LOW = 4;
+        private const int COL_ENERGY_HIGH = 5;
+        private const int COL_RATING = 6;
 
         public string EmailAddress
         {
@@ -99,13 +98,7 @@ namespace EnergyEmailer
             private set;
         }
 
-        public string RoomNumber
-        {
-            get;
-            private set;
-        }
-
-        public int MessageType
+        public int UserGroupId
         {
             get;
             private set;
@@ -117,13 +110,13 @@ namespace EnergyEmailer
             private set;
         }
 
-        public double OtherEnergyUse
+        public double HighestEnergyUse
         {
             get;
             private set;
         }
 
-        public double BestEnergyUse
+        public double LowestEnergyUse
         {
             get;
             private set;
@@ -149,24 +142,15 @@ namespace EnergyEmailer
 
             try
             {
-                MessageType = Convert.ToInt32(table[rowNum, COL_MESSAGE_TYPE]);
-                if (MessageType < 0 || MessageType > 2)
+                UserGroupId = Convert.ToInt32(table[rowNum, COL_USER_GROUP]);
+                if (UserGroupId < 1 || UserGroupId > 3)
                 {
                     throw new Exception();
                 }
             }
             catch
             {
-                throw new InvalidExcelEntryException("Message type", table[rowNum, COL_MESSAGE_TYPE].ToString());
-            }
-
-            try
-            {
-                RoomNumber = Convert.ToString(table[rowNum, COL_ROOM_NUMBER]);
-            }
-            catch
-            {
-                throw new InvalidExcelEntryException("Room number", table[rowNum, COL_ROOM_NUMBER].ToString());
+                throw new InvalidExcelEntryException("User group", table[rowNum, COL_USER_GROUP].ToString());
             }
 
             try
@@ -180,40 +164,33 @@ namespace EnergyEmailer
 
             try
             {
-                OtherEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_OTHER]);
+                LowestEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_LOW]);
             }
             catch
             {
-                throw new InvalidExcelEntryException("Compared energy use", table[rowNum, COL_ENERGY_OTHER].ToString());
+                throw new InvalidExcelEntryException("Compared energy use", table[rowNum, COL_ENERGY_LOW].ToString());
             }
 
             try
             {
-                BestEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_BEST]);
+                HighestEnergyUse = Convert.ToDouble(table[rowNum, COL_ENERGY_HIGH]);
             }
             catch
             {
-                throw new InvalidExcelEntryException("Best energy use", table[rowNum, COL_ENERGY_OTHER].ToString());
+                throw new InvalidExcelEntryException("Best energy use", table[rowNum, COL_ENERGY_HIGH].ToString());
             }
 
-            if (MessageType != Emailer.MESSAGE_TYPE_CONTROL)
+            try
             {
-                try
+                Rating = Convert.ToInt32(table[rowNum, COL_RATING]);
+                if (Rating < 1 || Rating > 1)
                 {
-                    Rating = Convert.ToInt32(table[rowNum, COL_RATING]);
-                    if (Rating < 1 || Rating > 3)
-                    {
-                        throw new Exception();
-                    }
-                }
-                catch
-                {
-                    throw new InvalidExcelEntryException("Rating", table[rowNum, COL_RATING].ToString());
+                    throw new Exception();
                 }
             }
-            else
+            catch
             {
-                Rating = 0;
+                throw new InvalidExcelEntryException("Rating", table[rowNum, COL_RATING].ToString());
             }
         }
     }
