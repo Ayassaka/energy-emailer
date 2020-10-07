@@ -239,9 +239,15 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="html\ReportCard_Control.html" />
-    <Content Include="html\ReportCard_Lifestyle.html" />
-    <Content Include="html\ReportCard_Neighbor.html" />
+    <Content Include="html\ReportCard_Control.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="html\ReportCard_Lifestyle.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="html\ReportCard_Neighbor.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="html\ReportCard_Template.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

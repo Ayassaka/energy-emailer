@@ -13,5 +13,4 @@ This is modified to fit the need of a new study in Unversity of Michigan.
 Notes:
 
 - The HTML template has to go through a css inliner to be a valid email document.
-- Copy the HTML to `html/` before launching.
 - Image hosting service may need change.
